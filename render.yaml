@@ -1,9 +1,8 @@
 services:
-  - type: web
+  - type: static
     name: arjav-capital
-    runtime: node
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    staticPublishPath: ./dist/client
     envVars:
       - key: NODE_VERSION
         value: "22"
