@@ -1,0 +1,149 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-violet: var(--brand-violet);
+  --color-night: var(--night);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.25rem;
+  --background: oklch(1 0 0);
+  --surface: oklch(0.978 0.004 275);
+  --foreground: oklch(0.216 0 0);
+  --ink: oklch(0.216 0 0);
+  --ink-soft: oklch(0.42 0.008 280);
+  --ink-muted: oklch(0.52 0.012 280);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.216 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.216 0 0);
+  --brand-deep: oklch(0.269 0.093 281.5);
+  --brand-violet: oklch(0.494 0.166 300.6);
+  --night: oklch(0.196 0.058 279);
+  --primary: oklch(0.269 0.093 281.5);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.978 0.004 275);
+  --secondary-foreground: oklch(0.269 0.093 281.5);
+  --muted: oklch(0.978 0.004 275);
+  --muted-foreground: oklch(0.475 0 0);
+  --accent: oklch(0.494 0.166 300.6);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: color-mix(in srgb, #1b1e49 10%, transparent);
+  --input: color-mix(in srgb, #1b1e49 14%, transparent);
+  --ring: oklch(0.494 0.166 300.6);
+
+  --gradient-brand: linear-gradient(120deg, #1b1e49 0%, #6d41af 100%);
+  --gradient-brand-soft: linear-gradient(115deg, rgba(10, 11, 28, 0.97) 0%, rgba(20, 22, 56, 0.92) 45%, rgba(72, 42, 118, 0.8) 100%);
+  --shadow-card: 0 1px 2px rgba(27, 30, 73, 0.04), 0 18px 44px -24px rgba(27, 30, 73, 0.28);
+  --shadow-lift: 0 2px 6px rgba(27, 30, 73, 0.06), 0 34px 70px -28px rgba(27, 30, 73, 0.34);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+}
+
+@utility gradient-brand {
+  background-image: var(--gradient-brand);
+}
+
+@utility gradient-text {
+  background-image: var(--gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+@utility card-soft {
+  background-color: var(--color-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border);
+  transition:
+    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-6px);
+  }
+}
+
+@utility rule-line {
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-border);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
