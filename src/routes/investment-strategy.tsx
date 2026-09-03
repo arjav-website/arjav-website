@@ -32,7 +32,7 @@ export const Route = createFileRoute("/investment-strategy")({
 const valueCreation = [
   {
     title: "Operations",
-    body: "Transition ownership smoothly, respecting the franchise and make necessary improvements",
+    body: "Transition ownership smoothly, respect the franchise and make necessary improvements",
   },
   {
     title: "Growth",
@@ -80,9 +80,10 @@ function Strategy() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 max-w-4xl text-[2.9rem] font-bold text-white sm:text-[4rem] lg:text-[5rem]"
+            className="mt-8 max-w-5xl text-[2.9rem] font-bold text-white sm:text-[4rem] lg:text-[5rem]"
           >
-            Ownership Transition Unlocks Opportunities
+            <span className="block">Ownership Transition</span>
+            <span className="block whitespace-nowrap">Unlocks Opportunities</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 22 }}
