@@ -37,7 +37,7 @@ const team: { initials: string; name: string; role: string; bio: string; photo?:
     initials: "AP",
     photo: akshayaPhoto,
     name: "Akshaya Prasad",
-    role: "Managing Partner",
+    role: "Founder & Managing Partner",
     bio: "Akshaya is the Managing Partner of Arjav Investment Advisors LLP and leads the investment team at the firm. Prior to joining Arjav, Akshaya was a Partner and Managing Director at Greater Pacific Capital, and headed the firm\u2019s India office. He led the team that was responsible for origination, portfolio management and exits for the firm\u2019s investments. Prior to joining Greater Pacific Capital, Akshaya was the Head of Infrastructure Investing at Goldman Sachs, where he was based in London and Mumbai and was part of the senior team that managed Goldman Sachs\u2019 US$6.5 bn Infrastructure Fund. Formerly, Akshaya was an Executive Director in the Investment Banking Division of Goldman Sachs based in London, where he specialised in cross-border Mergers and Acquisitions. Akshaya has an MBA from the Indian Institute of Management, Bangalore and a BA from St Stephen\u2019s College, New Delhi.",
   },
   {
@@ -185,8 +185,7 @@ function Leadership() {
               Arjav is anchored by leading industrialists and their family offices
             </h2>
             <p className="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-ink-soft">
-              30% of the fund is anchored by 9 leading industrialists and their family
-              offices.
+              Fund is anchored by leading industrialists and their family offices
             </p>
           </Reveal>
           <div className="mt-20 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
