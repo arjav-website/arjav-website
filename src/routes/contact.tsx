@@ -40,10 +40,12 @@ const fieldClass =
 
 function Contact() {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const result = schema.safeParse(Object.fromEntries(fd.entries()));
     if (!result.success) {
       const next: Record<string, string> = {};
@@ -52,8 +54,40 @@ function Contact() {
       return;
     }
     setErrors({});
-    e.currentTarget.reset();
-    toast.success("Thank you — your enquiry has been received in confidence.");
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY as string | undefined;
+    if (!accessKey) {
+      console.error("Missing VITE_WEB3FORMS_ACCESS_KEY — enquiry not sent.");
+      toast.error("Something went wrong. Please email us directly at info@arjavcapital.com.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      fd.append("access_key", accessKey);
+      fd.append("subject", "New enquiry — Arjav Capital website");
+      fd.append("from_name", "Arjav Capital Website");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: fd,
+      });
+      const json = await response.json();
+
+      if (json.success) {
+        form.reset();
+        toast.success("Thank you — your enquiry has been received in confidence.");
+      } else {
+        console.error("Web3Forms error:", json);
+        toast.error("Something went wrong. Please email us directly at info@arjavcapital.com.");
+      }
+    } catch (err) {
+      console.error("Enquiry submission failed:", err);
+      toast.error("Something went wrong. Please email us directly at info@arjavcapital.com.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -124,13 +158,23 @@ function Contact() {
                 />
               </div>
 
+              <input
+                type="checkbox"
+                name="botcheck"
+                className="hidden"
+                style={{ display: "none" }}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+
               <div className="sm:col-span-2">
                 <button
                   type="submit"
-                  className="w-full px-10 py-5 text-[0.95rem] font-semibold text-white transition-opacity hover:opacity-90 sm:w-auto"
+                  disabled={submitting}
+                  className="w-full px-10 py-5 text-[0.95rem] font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                   style={{ backgroundImage: "var(--gradient-brand)" }}
                 >
-                  Submit Enquiry
+                  {submitting ? "Sending…" : "Submit Enquiry"}
                 </button>
               </div>
             </form>
