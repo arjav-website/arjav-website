@@ -46,6 +46,7 @@ const fields = [
     required: true,
     autoComplete: "name",
     maxLength: 100,
+    placeholder: "Jane Doe",
   },
   {
     id: "organisation",
@@ -54,6 +55,7 @@ const fields = [
     required: true,
     autoComplete: "organization",
     maxLength: 120,
+    placeholder: "Arjav Capital",
   },
   {
     id: "email",
@@ -62,6 +64,7 @@ const fields = [
     required: true,
     autoComplete: "email",
     maxLength: 255,
+    placeholder: "name@company.com",
     hint: "Use the format name@company.com.",
   },
   {
@@ -71,7 +74,7 @@ const fields = [
     required: false,
     autoComplete: "tel",
     maxLength: 30,
-    hint: "Optional.",
+    placeholder: "+91 98765 43210",
   },
 ] as const;
 
@@ -167,6 +170,7 @@ function Contact() {
         <div className="grid gap-20 lg:grid-cols-[1.25fr_0.75fr]">
           <Reveal>
             <p className="eyebrow !text-ink">Enquiry</p>
+            <p className="mt-3 text-[0.85rem] text-ink">* indicates mandatory field</p>
             <form onSubmit={onSubmit} noValidate className="mt-12 grid gap-10 sm:grid-cols-2">
               {fields.map((field) => {
                 const errorId = `${field.id}-error`;
@@ -178,7 +182,7 @@ function Contact() {
                   <div key={field.id}>
                     <label htmlFor={field.id} className="eyebrow !text-ink">
                       {field.label}
-                      {field.required ? " (required)" : ""}
+                      {field.required ? "*" : ""}
                     </label>
                     {field.hint ? (
                       <p id={hintId} className="mt-2 text-[0.85rem] leading-relaxed text-ink">
@@ -190,6 +194,7 @@ function Contact() {
                       name={field.id}
                       type={field.type}
                       autoComplete={field.autoComplete}
+                      placeholder={field.placeholder}
                       required={field.required}
                       aria-required={field.required ? true : undefined}
                       aria-invalid={errors[field.id] ? true : undefined}
@@ -210,21 +215,18 @@ function Contact() {
                 <label htmlFor="message" className="eyebrow !text-ink">
                   Message
                 </label>
-                <p id="message-hint" className="mt-2 text-[0.85rem] leading-relaxed text-ink">
-                  Optional.
-                </p>
                 <textarea
                   id="message"
                   name="message"
                   rows={4}
                   maxLength={1000}
-                  aria-describedby={errors.message ? "message-hint message-error" : "message-hint"}
-                  aria-invalid={errors.message ? true : undefined}
+                  aria-describedby={errors["message"] ? "message-error" : undefined}
+                  aria-invalid={errors["message"] ? true : undefined}
                   className={`${fieldClass} resize-none`}
                 />
-                {errors.message ? (
+                {errors["message"] ? (
                   <p id="message-error" role="alert" className="mt-2 text-[0.85rem] text-destructive">
-                    {errors.message}
+                    {errors["message"]}
                   </p>
                 ) : null}
               </div>
