@@ -125,20 +125,29 @@ function Contact() {
         <div className="grid gap-20 lg:grid-cols-[1.25fr_0.75fr]">
           <Reveal>
             <p className="eyebrow">Enquiry</p>
+            <p className="mt-3 text-[0.85rem] text-ink-muted">* indicates mandatory field</p>
             <form onSubmit={onSubmit} className="mt-12 grid gap-10 sm:grid-cols-2">
               {(
                 [
-                  ["name", "Name", "text", false],
-                  ["organisation", "Organisation", "text", false],
-                  ["email", "Email", "email", false],
-                  ["phone", "Phone", "tel", false],
+                  ["name", "Name", "text", true, "Jane Doe"],
+                  ["organisation", "Organisation", "text", true, "Arjav Capital"],
+                  ["email", "Email", "email", true, "name@company.com"],
+                  ["phone", "Phone", "tel", false, "+91 98765 43210"],
                 ] as const
-              ).map(([id, label, type]) => (
+              ).map(([id, label, type, required, placeholder]) => (
                 <div key={id}>
                   <label htmlFor={id} className="eyebrow">
                     {label}
+                    {required && "*"}
                   </label>
-                  <input id={id} name={id} type={type} className={fieldClass} maxLength={255} />
+                  <input
+                    id={id}
+                    name={id}
+                    type={type}
+                    placeholder={placeholder}
+                    className={fieldClass}
+                    maxLength={255}
+                  />
                   {errors[id] && (
                     <p className="mt-2 text-[0.8rem] text-destructive">{errors[id]}</p>
                   )}
