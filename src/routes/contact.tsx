@@ -65,7 +65,6 @@ const fields = [
     autoComplete: "email",
     maxLength: 255,
     placeholder: "name@company.com",
-    hint: "Use the format name@company.com.",
   },
   {
     id: "phone",
