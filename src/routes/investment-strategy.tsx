@@ -61,18 +61,25 @@ function Strategy() {
       <section className="relative overflow-hidden">
         <img
           src={engineeringImg}
-          alt="Precision engineering machinery"
+          alt=""
+          aria-hidden="true"
           width={1400}
           height={1000}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0" style={{ backgroundImage: "var(--gradient-brand-soft)" }} />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(115deg, rgba(10, 11, 28, 0.97) 0%, rgba(20, 22, 56, 0.94) 48%, rgba(36, 18, 64, 0.92) 100%)",
+          }}
+        />
         <div className="relative mx-auto max-w-[1400px] px-6 pb-28 pt-48 lg:px-12 lg:pb-40 lg:pt-56">
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="eyebrow !text-white/60"
+            className="eyebrow !text-white"
           >
             Investment Strategy
           </motion.p>
@@ -82,14 +89,15 @@ function Strategy() {
             transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mt-8 max-w-5xl text-[2.9rem] font-bold text-white sm:text-[4rem] lg:text-[5rem]"
           >
-            <span className="block">Ownership Transition</span>
-            <span className="block whitespace-nowrap">Unlocks Opportunities</span>
+            Ownership Transition
+            <br />
+            Unlocks Opportunities
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white/75 lg:text-[1.2rem]"
+            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white lg:text-[1.2rem]"
           >
             Arjav invests in profitable businesses where an ownership transition unlocks
             opportunities for long-term value creation. The owners of these businesses - families,

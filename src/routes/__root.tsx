@@ -133,7 +133,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Nav />
-      <main>
+      <main id="main-content" tabIndex={-1} className="scroll-mt-20 outline-none">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}

@@ -84,7 +84,8 @@ function Home() {
       <section ref={heroRef} className="relative flex min-h-screen items-center overflow-hidden">
         <motion.img
           src={heroImg}
-          alt="Bright, orderly modern manufacturing plant floor with workers at assembly stations"
+          alt=""
+          aria-hidden="true"
           width={1920}
           height={1200}
           style={{ y }}
@@ -92,7 +93,10 @@ function Home() {
         />
         <div
           className="absolute inset-0"
-          style={{ backgroundImage: "var(--gradient-brand-soft)" }}
+          style={{
+            backgroundImage:
+              "linear-gradient(115deg, rgba(10, 11, 28, 0.97) 0%, rgba(20, 22, 56, 0.94) 48%, rgba(36, 18, 64, 0.92) 100%)",
+          }}
         />
         <motion.div
           style={{ opacity: fade }}
@@ -110,7 +114,7 @@ function Home() {
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white/75 lg:text-[1.2rem]"
+            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white lg:text-[1.2rem]"
           >
             Arjav Capital is a control-oriented private equity platform investing in India&rsquo;s
             ownership transition by acquiring, transforming and scaling founder-led mid-market
@@ -124,7 +128,7 @@ function Home() {
           >
             <Link
               to="/contact"
-              className="group inline-flex items-center justify-center gap-3 bg-white px-9 py-5 text-[0.95rem] font-semibold text-ink transition-colors hover:bg-white/90"
+              className="group inline-flex items-center justify-center gap-3 bg-white px-9 py-5 text-[0.95rem] font-semibold text-ink transition-colors hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               Get in Touch
               <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
@@ -132,7 +136,7 @@ function Home() {
 
             <Link
               to="/leadership"
-              className="inline-flex items-center justify-center border border-white/35 px-9 py-5 text-[0.95rem] font-semibold text-white transition-colors hover:bg-white/10"
+              className="inline-flex items-center justify-center border border-white px-9 py-5 text-[0.95rem] font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               Meet Our Team
             </Link>
@@ -148,9 +152,11 @@ function Home() {
         <div className="mt-8 grid items-start gap-16 lg:grid-cols-[0.9fr_1.1fr]">
           <Reveal>
             <h2 className="text-[1.75rem] font-semibold leading-[1.12] tracking-[-0.02em] sm:text-[2.6rem] lg:text-[3.2rem]">
-              <span className="block whitespace-nowrap">India is Entering a</span>
-              <span className="block whitespace-nowrap">Once-in-a-Generation</span>
-              <span className="block whitespace-nowrap">Ownership Transition</span>
+              India is Entering a
+              <br />
+              Once-in-a-Generation
+              <br />
+              Ownership Transition
             </h2>
           </Reveal>
           <Reveal delay={0.1} className="space-y-7 text-ink-soft">
@@ -197,37 +203,66 @@ function Home() {
 
           <Reveal delay={0.05}>
             <div className="mt-16 overflow-hidden border border-border bg-background">
-              <div className="grid grid-cols-2 border-b border-border">
-                <div className="min-w-0 px-4 py-5 sm:px-8 md:px-12 md:py-6">
-                  <p className="eyebrow !text-[0.6rem] sm:!text-[0.75rem]">
-                    Traditional Private Equity
-                  </p>
-                </div>
-                <div className="relative min-w-0 border-l border-border px-4 py-5 sm:px-8 md:px-12 md:py-6">
-                  <span
-                    className="absolute inset-x-0 top-0 h-[3px]"
-                    style={{ backgroundImage: "var(--gradient-brand)" }}
-                  />
-                  <p className="eyebrow gradient-text !text-[0.6rem] sm:!text-[0.75rem]">
-                    Arjav Capital
-                  </p>
-                </div>
-              </div>
-
-              {comparison.map(([left, right]) => (
-                <div key={left} className="grid grid-cols-2 border-b border-border last:border-0">
-                  <div className="flex min-w-0 items-start gap-2 px-4 py-5 text-ink-soft sm:gap-4 sm:px-8 md:px-12 md:py-7">
-                    <Minus size={14} className="mt-1 shrink-0 text-ink-muted" />
-                    <span className="text-[0.9rem] leading-relaxed sm:text-[1.05rem]">{left}</span>
-                  </div>
-                  <div className="flex min-w-0 items-start gap-2 border-l border-border bg-surface px-4 py-5 text-ink sm:gap-4 sm:px-8 md:px-12 md:py-7">
-                    <Check size={14} className="mt-1 shrink-0 text-accent" />
-                    <span className="text-[0.9rem] font-medium leading-relaxed sm:text-[1.05rem]">
-                      {right}
-                    </span>
-                  </div>
-                </div>
-              ))}
+              <table className="w-full border-collapse text-left">
+                <caption className="sr-only">
+                  Comparison of traditional private equity and Arjav Capital
+                </caption>
+                <thead>
+                  <tr className="border-b border-border">
+                    <th
+                      scope="col"
+                      className="min-w-0 px-4 py-5 text-left sm:px-8 md:px-12 md:py-6"
+                    >
+                      <span className="eyebrow !text-[0.6rem] sm:!text-[0.75rem]">
+                        Traditional Private Equity
+                      </span>
+                    </th>
+                    <th
+                      scope="col"
+                      className="relative min-w-0 border-l border-border px-4 py-5 text-left sm:px-8 md:px-12 md:py-6"
+                    >
+                      <span
+                        className="absolute inset-x-0 top-0 h-[3px]"
+                        style={{ backgroundImage: "var(--gradient-brand)" }}
+                        aria-hidden="true"
+                      />
+                      <span className="eyebrow gradient-text !text-[0.6rem] sm:!text-[0.75rem]">
+                        Arjav Capital
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparison.map(([left, right]) => (
+                    <tr key={left} className="border-b border-border last:border-0">
+                      <td className="min-w-0 px-4 py-5 text-ink-soft sm:px-8 md:px-12 md:py-7">
+                        <div className="flex items-start gap-2 sm:gap-4">
+                          <Minus
+                            size={14}
+                            className="mt-1 shrink-0 text-ink-muted"
+                            aria-hidden="true"
+                          />
+                          <span className="text-[0.9rem] leading-relaxed sm:text-[1.05rem]">
+                            {left}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="min-w-0 border-l border-border bg-surface px-4 py-5 text-ink sm:px-8 md:px-12 md:py-7">
+                        <div className="flex items-start gap-2 sm:gap-4">
+                          <Check
+                            size={14}
+                            className="mt-1 shrink-0 text-accent"
+                            aria-hidden="true"
+                          />
+                          <span className="text-[0.9rem] font-medium leading-relaxed sm:text-[1.05rem]">
+                            {right}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </Reveal>
         </div>
@@ -273,13 +308,20 @@ function Home() {
       <section className="relative overflow-hidden">
         <img
           src={infraImg}
-          alt="Aerial view of Indian port infrastructure at dawn"
+          alt=""
+          aria-hidden="true"
           loading="lazy"
           width={1600}
           height={1008}
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0" style={{ backgroundImage: "var(--gradient-brand-soft)" }} />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(115deg, rgba(10, 11, 28, 0.97) 0%, rgba(20, 22, 56, 0.94) 48%, rgba(36, 18, 64, 0.92) 100%)",
+          }}
+        />
         <div className="relative mx-auto max-w-[1400px] px-6 py-32 lg:px-12 lg:py-44">
           <Reveal>
             <h2 className="max-w-4xl text-[2.2rem] font-semibold text-white sm:text-[3rem] lg:text-[3.6rem]">
@@ -287,7 +329,7 @@ function Home() {
             </h2>
             <Link
               to="/contact"
-              className="group mt-14 inline-flex items-center gap-3 bg-white px-9 py-5 text-[0.95rem] font-semibold text-ink transition-colors hover:bg-white/90"
+              className="group mt-14 inline-flex items-center gap-3 bg-white px-9 py-5 text-[0.95rem] font-semibold text-ink transition-colors hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               Get in Touch
               <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />

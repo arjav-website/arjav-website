@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Linkedin } from "lucide-react";
@@ -36,11 +36,55 @@ const schema = z.object({
 });
 
 const fieldClass =
-  "w-full border-b border-input bg-transparent py-4 text-[1rem] text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-brand-violet";
+  "w-full border-b border-ink/40 bg-transparent py-4 text-[1rem] text-ink transition-colors focus:border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-violet";
+
+const fields = [
+  {
+    id: "name",
+    label: "Name",
+    type: "text",
+    required: true,
+    autoComplete: "name",
+    maxLength: 100,
+    placeholder: "Jane Doe",
+  },
+  {
+    id: "organisation",
+    label: "Organisation",
+    type: "text",
+    required: true,
+    autoComplete: "organization",
+    maxLength: 120,
+    placeholder: "Arjav Capital",
+  },
+  {
+    id: "email",
+    label: "Email",
+    type: "email",
+    required: true,
+    autoComplete: "email",
+    maxLength: 255,
+    placeholder: "name@company.com",
+  },
+  {
+    id: "phone",
+    label: "Phone",
+    type: "tel",
+    required: false,
+    autoComplete: "tel",
+    maxLength: 30,
+    placeholder: "+91 98765 43210",
+  },
+] as const;
 
 function Contact() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const firstInvalid = Object.keys(errors)[0];
+    if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+  }, [errors]);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -98,7 +142,7 @@ function Contact() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="eyebrow !text-white/50"
+            className="eyebrow !text-white"
           >
             Contact
           </motion.p>
@@ -114,7 +158,7 @@ function Contact() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white/65 lg:text-[1.2rem]"
+            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white lg:text-[1.2rem]"
           >
             {"\n"}
           </motion.p>
@@ -124,29 +168,50 @@ function Contact() {
       <section className="mx-auto max-w-[1400px] px-6 py-24 lg:px-12 lg:py-36">
         <div className="grid gap-20 lg:grid-cols-[1.25fr_0.75fr]">
           <Reveal>
-            <p className="eyebrow">Enquiry</p>
-            <form onSubmit={onSubmit} className="mt-12 grid gap-10 sm:grid-cols-2">
-              {(
-                [
-                  ["name", "Name", "text", false],
-                  ["organisation", "Organisation", "text", false],
-                  ["email", "Email", "email", false],
-                  ["phone", "Phone", "tel", false],
-                ] as const
-              ).map(([id, label, type]) => (
-                <div key={id}>
-                  <label htmlFor={id} className="eyebrow">
-                    {label}
-                  </label>
-                  <input id={id} name={id} type={type} className={fieldClass} maxLength={255} />
-                  {errors[id] && (
-                    <p className="mt-2 text-[0.8rem] text-destructive">{errors[id]}</p>
-                  )}
-                </div>
-              ))}
+            <p className="eyebrow !text-ink">Enquiry</p>
+            <p className="mt-3 text-[0.85rem] text-ink">* indicates mandatory field</p>
+            <form onSubmit={onSubmit} noValidate className="mt-12 grid gap-10 sm:grid-cols-2">
+              {fields.map((field) => {
+                const errorId = `${field.id}-error`;
+                const hintId = `${field.id}-hint`;
+                const describedBy = [field.hint ? hintId : null, errors[field.id] ? errorId : null]
+                  .filter(Boolean)
+                  .join(" ");
+                return (
+                  <div key={field.id}>
+                    <label htmlFor={field.id} className="eyebrow !text-ink">
+                      {field.label}
+                      {field.required ? "*" : ""}
+                    </label>
+                    {field.hint ? (
+                      <p id={hintId} className="mt-2 text-[0.85rem] leading-relaxed text-ink">
+                        {field.hint}
+                      </p>
+                    ) : null}
+                    <input
+                      id={field.id}
+                      name={field.id}
+                      type={field.type}
+                      autoComplete={field.autoComplete}
+                      placeholder={field.placeholder}
+                      required={field.required}
+                      aria-required={field.required ? true : undefined}
+                      aria-invalid={errors[field.id] ? true : undefined}
+                      aria-describedby={describedBy || undefined}
+                      maxLength={field.maxLength}
+                      className={fieldClass}
+                    />
+                    {errors[field.id] ? (
+                      <p id={errorId} role="alert" className="mt-2 text-[0.85rem] text-destructive">
+                        {errors[field.id]}
+                      </p>
+                    ) : null}
+                  </div>
+                );
+              })}
 
               <div className="sm:col-span-2">
-                <label htmlFor="message" className="eyebrow">
+                <label htmlFor="message" className="eyebrow !text-ink">
                   Message
                 </label>
                 <textarea
@@ -154,24 +219,24 @@ function Contact() {
                   name="message"
                   rows={4}
                   maxLength={1000}
+                  aria-describedby={errors["message"] ? "message-error" : undefined}
+                  aria-invalid={errors["message"] ? true : undefined}
                   className={`${fieldClass} resize-none`}
                 />
+                {errors["message"] ? (
+                  <p id="message-error" role="alert" className="mt-2 text-[0.85rem] text-destructive">
+                    {errors["message"]}
+                  </p>
+                ) : null}
               </div>
 
-              <input
-                type="checkbox"
-                name="botcheck"
-                className="hidden"
-                style={{ display: "none" }}
-                tabIndex={-1}
-                autoComplete="off"
-              />
+              <input type="hidden" name="botcheck" value="" />
 
               <div className="sm:col-span-2">
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full px-10 py-5 text-[0.95rem] font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                  className="w-full bg-brand-deep px-10 py-5 text-[0.95rem] font-semibold text-white transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-violet disabled:cursor-not-allowed sm:w-auto"
                   style={{ backgroundImage: "var(--gradient-brand)" }}
                 >
                   {submitting ? "Sending…" : "Submit Enquiry"}
@@ -182,7 +247,7 @@ function Contact() {
 
           <Reveal delay={0.12}>
             <div className="bg-surface p-10 lg:p-12">
-              <p className="eyebrow">Office</p>
+              <p className="eyebrow !text-ink">Office</p>
               <address className="mt-8 not-italic text-[1rem] leading-[1.6] text-ink-soft">
                 301, 3rd Floor, Peninsula Chambers,
                 <br />
@@ -192,7 +257,7 @@ function Contact() {
               </address>
 
               <div className="mt-10 border-t border-border pt-8">
-                <p className="eyebrow">Email</p>
+                <p className="eyebrow !text-ink">Email</p>
                 <a
                   href="mailto:info@arjavcapital.com"
                   className="mt-3 inline-block text-[1.05rem] font-semibold hover:text-brand-violet"
@@ -206,7 +271,7 @@ function Contact() {
                   href="https://www.linkedin.com/company/arjavcapital/"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-[1rem] font-semibold hover:text-brand-violet"
+                  className="inline-flex items-center gap-2 text-[1rem] font-semibold hover:text-brand-violet focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-violet"
                 >
                   <Linkedin size={16} /> LinkedIn
                 </a>

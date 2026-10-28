@@ -20,7 +20,7 @@ export function LegalPage({
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="eyebrow !text-white/50"
+            className="eyebrow !text-white"
           >
             {eyebrow}
           </motion.p>
@@ -37,7 +37,7 @@ export function LegalPage({
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 max-w-3xl text-[1rem] leading-relaxed text-white/65 lg:text-[1.1rem]"
+              className="mt-8 max-w-3xl text-[1rem] leading-relaxed text-white lg:text-[1.1rem]"
             >
               {intro}
             </motion.p>

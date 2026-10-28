@@ -111,7 +111,7 @@ function Leadership() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="eyebrow !text-white/50"
+            className="eyebrow !text-white"
           >
             Leadership
           </motion.p>
@@ -127,7 +127,7 @@ function Leadership() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white/65 lg:text-[1.2rem]"
+            className="mt-10 max-w-2xl text-[1.05rem] leading-relaxed text-white lg:text-[1.2rem]"
           >
             Arjav combines institutional investing expertise with the operating experience of
             entrepreneurs, industrial families and seasoned executives.
@@ -138,7 +138,7 @@ function Leadership() {
       {/* TEAM */}
       <section className="mx-auto max-w-[1400px] px-6 py-28 lg:px-12 lg:py-40">
         <Reveal>
-          <p className="eyebrow">Investment Team</p>
+          <h2 className="eyebrow">Investment Team</h2>
         </Reveal>
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
           {team.map((m, i) => (

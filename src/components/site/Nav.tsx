@@ -35,11 +35,20 @@ export function Nav() {
         solid ? "bg-background/92 backdrop-blur-md border-b border-border" : "bg-transparent"
       }`}
     >
+      <a
+        href="#main-content"
+        className="skip-link"
+      >
+        Skip to main content
+      </a>
       <div className="mx-auto flex h-20 max-w-[1400px] items-center justify-between px-6 lg:px-12">
-        <Link to="/" className="flex items-center">
+        <Link
+          to="/"
+          className="flex items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-violet"
+        >
           <img
             src={solid ? logoDark : logoWhite}
-            alt="Arjav Capital"
+            alt="Arjav"
             className="h-[22px] w-auto transition-opacity duration-300"
             width={520}
             height={140}
@@ -47,45 +56,64 @@ export function Nav() {
         </Link>
 
 
-        <nav className="hidden items-center gap-10 lg:flex">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              activeOptions={{ exact: l.to === "/" }}
-              className={`text-[0.9rem] font-medium transition-colors ${
-                solid ? "text-ink-soft hover:text-ink" : "text-white/75 hover:text-white"
-              }`}
-              activeProps={{
-                className: solid ? "!text-ink font-semibold" : "!text-white font-semibold",
-              }}
-            >
-              {l.label}
-            </Link>
-          ))}
+        <nav aria-label="Primary" className="hidden lg:block">
+          <ul className="flex items-center gap-10">
+            {links.map((l) => (
+              <li key={l.to}>
+                <Link
+                  to={l.to}
+                  activeOptions={{ exact: l.to === "/" }}
+                  className={`text-[0.9rem] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
+                    solid
+                      ? "text-ink-soft hover:text-ink focus-visible:outline-brand-violet"
+                      : "text-white hover:text-white focus-visible:outline-white"
+                  }`}
+                  activeProps={{
+                    className: solid ? "!text-ink font-semibold" : "!text-white font-semibold",
+                  }}
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
         <button
+          type="button"
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="primary-mobile-nav"
           onClick={() => setOpen((v) => !v)}
-          className={`lg:hidden ${solid ? "text-ink" : "text-white"}`}
+          className={`lg:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
+            solid
+              ? "text-ink focus-visible:outline-brand-violet"
+              : "text-white focus-visible:outline-white"
+          }`}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background px-6 pb-8 pt-4 lg:hidden">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className="block border-b border-border py-4 text-base font-medium text-ink"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </div>
+        <nav
+          id="primary-mobile-nav"
+          aria-label="Primary"
+          className="border-t border-border bg-background px-6 pb-8 pt-4 lg:hidden"
+        >
+          <ul>
+            {links.map((l) => (
+              <li key={l.to} className="border-b border-border">
+                <Link
+                  to={l.to}
+                  className="block py-4 text-base font-medium text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-violet"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       )}
     </header>
   );
